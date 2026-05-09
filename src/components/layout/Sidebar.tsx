@@ -41,7 +41,8 @@ export default function Sidebar({ userRole, isOpen, onClose }: {
               <img src="/flogo.jpg" alt="Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit', objectFit: 'cover' }} />
             </div>
             <span className={styles.brandName}>
-              FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA
+              {/* FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA */}
+              FSCFN
             </span>
           </div>
           <button className={styles.closeBtn} onClick={onClose}>

@@ -8,7 +8,7 @@ import { SearchProvider } from "@/components/providers/SearchProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA | GovDrive",
+  title: "FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA | FSCFN",
   description: "Secure financial file management and collaboration portal for State Commissioners of Finance.",
 };
 

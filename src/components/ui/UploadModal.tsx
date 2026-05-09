@@ -12,7 +12,7 @@ interface UploadModalProps {
 }
 
 const categories = [
-  'Branding', 'Templates', 'Legal Forms', 'Training', 'Market Research', 'External Tools'
+  'Training', 'internal memo', 'incoming file', 'outgoingfile', 'hcf biodata& documents'
 ];
 
 export default function UploadModal({ isOpen, onClose }: UploadModalProps) {
@@ -108,7 +108,7 @@ export default function UploadModal({ isOpen, onClose }: UploadModalProps) {
           </div>
 
           <button type="submit" className={styles.submitBtn} disabled={isUploading}>
-            {isUploading ? <Loader2 className={styles.spinner} /> : 'Upload to GovDrive'}
+            {isUploading ? <Loader2 className={styles.spinner} /> : 'Upload to FSCFN'}
           </button>
         </form>
       </div>

@@ -16,7 +16,7 @@ export default function SettingsPage() {
       <div className={styles.container}>
         <div className={styles.header}>
           <h1>System Settings</h1>
-          <p>Configure GovDrive platform preferences and security</p>
+          <p>Configure FSCFN platform preferences and security</p>
         </div>
 
         <form onSubmit={handleSave}>

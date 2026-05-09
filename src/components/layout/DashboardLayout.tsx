@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (status === 'loading') {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-        <span>Loading GovDrive...</span>
+        <span>Loading FSCFN...</span>
       </div>
     );
   }

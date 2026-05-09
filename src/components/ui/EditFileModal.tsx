@@ -13,7 +13,7 @@ interface EditFileModalProps {
 }
 
 const categories = [
-  'Branding', 'Templates', 'Legal Forms', 'Training', 'Market Research', 'External Tools'
+  'Training', 'internal memo', 'incoming file', 'outgoingfile', 'hcf biodata& documents'
 ];
 
 export default function EditFileModal({ isOpen, onClose, file }: EditFileModalProps) {

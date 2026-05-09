@@ -7,16 +7,16 @@ import { Plus } from 'lucide-react';
 import styles from './resources.module.css';
 
 const categories = [
-  'All', 'Branding', 'Templates', 'Legal Forms', 'Training', 'Market Research', 'External Tools'
+  'All', 'Training', 'internal memo', 'incoming file', 'outgoingfile', 'hcf biodata& documents'
 ];
 
 const mockFiles = [
-  { id: '1', name: 'Brand Guidelines 2025', category: 'Templates', type: 'PDF', size: '2.4 MB', date: '2025-01-10' },
-  { id: '2', name: 'Legal Framework Alpha', category: 'Legal Forms', type: 'DOCX', size: '1.1 MB', date: '2025-02-15' },
-  { id: '3', name: 'Market Analysis Q1', category: 'Market Research', type: 'PDF', size: '5.8 MB', date: '2025-03-01' },
-  { id: '4', name: 'Staff Onboarding', category: 'Training', type: 'PDF', size: '3.2 MB', date: '2025-01-20' },
-  { id: '5', name: 'Identity Guidelines', category: 'Branding', type: 'PDF', size: '4.5 MB', date: '2025-02-05' },
-  { id: '6', name: 'External Tools Guide', category: 'External Tools', type: 'PDF', size: '1.8 MB', date: '2025-03-12' },
+  { id: '1', name: 'Internal Memo - Security', category: 'internal memo', type: 'PDF', size: '2.4 MB', date: '2025-01-10' },
+  { id: '2', name: 'Training Manual V1', category: 'Training', type: 'DOCX', size: '1.1 MB', date: '2025-02-15' },
+  { id: '3', name: 'Incoming File - Admin', category: 'incoming file', type: 'PDF', size: '5.8 MB', date: '2025-03-01' },
+  { id: '4', name: 'Staff Onboarding Video', category: 'Training', type: 'MP4', size: '3.2 MB', date: '2025-01-20' },
+  { id: '5', name: 'Outgoing Memo - Dept', category: 'outgoingfile', type: 'PDF', size: '4.5 MB', date: '2025-02-05' },
+  { id: '6', name: 'Biodata Forms', category: 'hcf biodata& documents', type: 'PDF', size: '1.8 MB', date: '2025-03-12' },
 ];
 
 import { useEffect } from 'react';
@@ -75,7 +75,11 @@ export default function ResourcesPage() {
   const handleDownload = (id: string) => {
     const file = files.find(f => f._id === id);
     if (file) {
-      window.open(file.cloudinaryUrl, '_blank');
+      let url = file.cloudinaryUrl;
+      if (url && url.includes('cloudinary.com')) {
+        url = url.replace('/upload/', '/upload/fl_attachment/');
+      }
+      window.open(url, '_blank');
     }
   };
 
@@ -119,6 +123,7 @@ export default function ResourcesPage() {
               type={file.fileType}
               size={(file.size / 1024 / 1024).toFixed(1) + ' MB'}
               date={new Date(file.uploadDate).toLocaleDateString()}
+              url={file.cloudinaryUrl}
               onDelete={handleDelete}
               onDownload={handleDownload}
               onEdit={handleEdit}

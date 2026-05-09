@@ -45,7 +45,7 @@ export default function LoginPage() {
           <div className={styles.logo}>
             <FileText size={32} color="white" />
           </div>
-          <h1>GovDrive</h1>
+          <h1>FSCFN</h1>
           <p>Government File Management System</p>
         </div>
 
