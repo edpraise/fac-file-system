@@ -2,15 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  FolderSearch, 
-  History, 
-  Users, 
-  Settings, 
+import {
+  LayoutDashboard,
+  FileText,
+  FolderSearch,
+  History,
+  Users,
+  Settings,
   LogOut,
-  Files
+  Files,
+  X
 } from 'lucide-react';
 import styles from './Sidebar.module.css';
 import { signOut } from 'next-auth/react';
@@ -23,44 +24,59 @@ const navItems = [
   { icon: Settings, label: 'Settings', href: '/settings' },
 ];
 
-export default function Sidebar({ userRole }: { userRole?: string }) {
+export default function Sidebar({ userRole, isOpen, onClose }: {
+  userRole?: string,
+  isOpen?: boolean,
+  onClose?: () => void
+}) {
   const pathname = usePathname();
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.logoContainer}>
-        <div className={styles.logo}>
-          <FileText size={20} color="white" />
+    <>
+      {isOpen && <div className={styles.overlay} onClick={onClose} />}
+      <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+        <div className={styles.logoContainer}>
+          <div className={styles.logoGroup}>
+            <div className={styles.logo}>
+              <img src="/flogo.jpg" alt="Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit', objectFit: 'cover' }} />
+            </div>
+            <span className={styles.brandName}>
+              FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA
+            </span>
+          </div>
+          <button className={styles.closeBtn} onClick={onClose}>
+            <X size={24} />
+          </button>
         </div>
-        <span style={{ fontWeight: 600, fontSize: '1.25rem' }}>GovDrive</span>
-      </div>
 
-      <nav className={styles.nav}>
-        {navItems.map((item) => {
-          if (item.adminOnly && userRole !== 'admin') return null;
-          
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
+        <nav className={styles.nav}>
+          {navItems.map((item) => {
+            if (item.adminOnly && userRole !== 'admin') return null;
 
-          return (
-            <Link 
-              key={item.href} 
-              href={item.href}
-              className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-            >
-              <Icon size={20} />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
 
-      <div className={styles.footer}>
-        <button className={styles.logoutBtn} onClick={() => signOut()}>
-          <LogOut size={20} />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+                onClick={onClose}
+              >
+                <Icon size={20} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className={styles.footer}>
+          <button className={styles.logoutBtn} onClick={() => signOut()}>
+            <LogOut size={20} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

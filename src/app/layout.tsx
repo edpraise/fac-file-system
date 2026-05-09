@@ -8,8 +8,8 @@ import { SearchProvider } from "@/components/providers/SearchProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GovDrive | File Management System",
-  description: "Secure file management for government offices.",
+  title: "FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA | GovDrive",
+  description: "Secure financial file management and collaboration portal for State Commissioners of Finance.",
 };
 
 export default function RootLayout({

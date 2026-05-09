@@ -17,9 +17,9 @@
 }
 
 .bellBtn:hover {
-  color: #3b82f6;
-  border-color: #3b82f6;
-  background: #eff6ff;
+  color: #008751;
+  border-color: #008751;
+  background: #f0f4f2;
   transform: translateY(-2px);
 }
 
@@ -76,7 +76,7 @@
 
 .markAllBtn {
   font-size: 0.75rem;
-  color: #3b82f6;
+  color: #008751;
   font-weight: 600;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .unread {
-  background: #eff6ff88;
+  background: rgba(0, 135, 81, 0.05);
 }
 
 .itemHeader {
@@ -120,7 +120,7 @@
 .unreadDot {
   width: 8px;
   height: 8px;
-  background: #3b82f6;
+  background: #008751;
   border-radius: 50%;
 }
 
@@ -151,11 +151,11 @@
   gap: 0.25rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: #008751;
 }
 
 .link:hover {
-  color: #2563eb;
+  color: #007043;
 }
 
 .empty {

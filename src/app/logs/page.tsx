@@ -46,15 +46,15 @@ export default function LogsPage() {
           <tbody>
             {logs.map((log) => (
               <tr key={log._id}>
-                <td>
+                <td data-label="Action">
                   <span className={`${styles.actionBadge} ${styles[log.action]}`}>
                     {log.action}
                   </span>
                 </td>
-                <td>{log.fileName || 'N/A'}</td>
-                <td>{log.userName || 'System'}</td>
-                <td>{new Date(log.timestamp).toLocaleString()}</td>
-                <td className={styles.details}>{log.details}</td>
+                <td data-label="Resource">{log.fileName || 'N/A'}</td>
+                <td data-label="Performed By">{log.userName || 'System'}</td>
+                <td data-label="Date & Time">{new Date(log.timestamp).toLocaleString()}</td>
+                <td data-label="Details" className={styles.details}>{log.details}</td>
               </tr>
             ))}
           </tbody>

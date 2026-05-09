@@ -71,7 +71,7 @@ export default function UserManagementPage() {
               ) : (
                 users.map(user => (
                   <tr key={user._id}>
-                    <td>
+                    <td data-label="User">
                       <div className={styles.userCell}>
                         <div className={styles.avatar}>{user.name.charAt(0)}</div>
                         <div>
@@ -80,24 +80,24 @@ export default function UserManagementPage() {
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Department">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Building2 size={16} color="#94a3b8" />
                         {user.department}
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Role">
                       <span className={`${styles.roleBadge} ${user.role === 'admin' ? styles.admin : styles.staff}`}>
                         {user.role}
                       </span>
                     </td>
-                    <td>
+                    <td data-label="Status">
                       <div className={styles.status}>
                         <div className={styles.statusDot} />
                         Active
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Actions">
                       <select 
                         className={styles.select}
                         value={user.role}
