@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import NextAuthProvider from "@/components/providers/NextAuthProvider";
 import ToasterProvider from "@/components/providers/ToasterProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <SearchProvider>
-            <ToasterProvider />
-            {children}
-          </SearchProvider>
+          <ThemeProvider>
+            <SearchProvider>
+              <ToasterProvider />
+              {children}
+            </SearchProvider>
+          </ThemeProvider>
         </NextAuthProvider>
       </body>
     </html>

@@ -1,13 +1,13 @@
 .sidebar {
   width: 280px;
-  background: white;
+  background: var(--section-bg);
   height: 100vh;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
-  border-right: 1px solid #dcfce7;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid var(--card-border);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
   z-index: 1000;
   box-shadow: 4px 0 24px rgba(0, 135, 81, 0.03);
 }
@@ -19,7 +19,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   color: #008751;
-  border-bottom: 1px solid #f0fdf4;
+  border-bottom: 1px solid var(--card-border);
   animation: slideDown 0.5s ease-out;
 }
 
@@ -36,7 +36,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: #0a2e1f;
+  color: var(--heading-color);
 }
 
 .closeBtn {
@@ -49,7 +49,7 @@
   width: 44px;
   min-width: 44px;
   height: 44px;
-  background: white;
+  background: var(--card-bg);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@
   gap: 1rem;
   padding: 0.875rem 1.25rem;
   border-radius: 12px;
-  color: #5c7066;
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 0.9375rem;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -93,20 +93,20 @@
 .navItem:nth-child(5) { animation-delay: 0.5s; }
 
 .navItem:hover {
-  background: #f0fdf4;
-  color: #008751;
+  background: var(--hover-bg);
+  color: var(--accent);
   transform: translateX(4px);
 }
 
 .active {
-  background: #008751;
+  background: var(--accent);
   color: white !important;
   box-shadow: 0 4px 12px rgba(0, 135, 81, 0.2);
 }
 
 .footer {
   padding: 1.5rem 1.25rem;
-  border-top: 1px solid #f0fdf4;
+  border-top: 1px solid var(--card-border);
 }
 
 .logoutBtn {
@@ -122,7 +122,7 @@
 }
 
 .logoutBtn:hover {
-  background: #fef2f2;
+  background: rgba(239, 68, 68, 0.08);
   transform: translateX(4px);
 }
 
@@ -155,21 +155,12 @@
     transform: translateX(0);
   }
   
-  .closeBtn {
-    display: block;
-  }
+  .closeBtn { display: block; }
 
-  .logoGroup span {
-    font-size: 0.7rem;
-  }
-
-  .brandName {
-    -webkit-line-clamp: 2;
-  }
+  .logoGroup span { font-size: 0.7rem; }
+  .brandName { -webkit-line-clamp: 2; }
 }
 
 @media (max-width: 480px) {
-  .sidebar {
-    width: 100%;
-  }
+  .sidebar { width: 100%; }
 }

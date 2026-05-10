@@ -1,114 +1,22 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 2.5rem;
-  animation: fadeIn 0.5s ease-out;
-}
+.header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; animation: fadeIn 0.5s ease-out; flex-wrap: wrap; gap: 1rem; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.titleSection h1 { font-size: 2.25rem; font-weight: 800; background: linear-gradient(135deg, #004d30 0%, #008751 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; letter-spacing: -0.025em; }
+:global([data-theme="dark"]) .titleSection h1 { background: linear-gradient(135deg, #34d399 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.titleSection p { color: var(--subtext-color); font-size: 1rem; }
 
-.titleSection h1 {
-  font-size: 2.25rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.025em;
-}
+.filterBar { margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; overflow-x: auto; padding: 0.5rem 0.25rem 1rem 0.25rem; scrollbar-width: none; }
+.filterBar::-webkit-scrollbar { display: none; }
+.categories { display: flex; gap: 0.75rem; }
 
-.titleSection p {
-  color: #64748b;
-  font-size: 1.1rem;
-}
+.catBtn { padding: 0.625rem 1.25rem; border-radius: 12px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--subtext-color); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow); }
+.catBtn:hover { background: var(--hover-bg); color: var(--foreground); transform: translateY(-1px); }
+.catActive { background: var(--accent) !important; color: white !important; border-color: var(--accent) !important; box-shadow: 0 4px 12px rgba(0, 135, 81, 0.25) !important; }
+.catActive:hover { opacity: 0.9; transform: translateY(-1px); }
 
-.filterBar {
-  margin-bottom: 2.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 0.5rem 0.25rem 1rem 0.25rem;
-  scrollbar-width: none; /* Firefox */
-}
+.fileGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; animation: fadeIn 0.6s ease-out; }
 
-.filterBar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
+.loading, .emptyState { text-align: center; padding: 5rem 2rem; color: var(--subtext-color); background: var(--card-bg); border-radius: 24px; border: 1px dashed var(--card-border); grid-column: 1 / -1; font-weight: 500; }
 
-.categories {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.catBtn {
-  padding: 0.625rem 1.25rem;
-  border-radius: 12px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-.catBtn:hover {
-  background-color: #f8fafc;
-  color: #1e293b;
-  transform: translateY(-1px);
-}
-
-.catActive {
-  background: #1e293b;
-  color: white;
-  border-color: #1e293b;
-  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
-}
-
-.catActive:hover {
-  background: #0f172a;
-  color: white;
-}
-
-.fileGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2rem;
-  animation: fadeIn 0.6s ease-out;
-}
-
-.loading, .emptyState {
-  text-align: center;
-  padding: 5rem 2rem;
-  color: #94a3b8;
-  background: white;
-  border-radius: 24px;
-  border: 1px dashed #e2e8f0;
-  grid-column: 1 / -1;
-  font-weight: 500;
-}
-
-@media (max-width: 1024px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .titleSection h1 {
-    font-size: 1.75rem;
-  }
-  
-  .fileGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-}
+@media (max-width: 1024px) { .header { flex-direction: column; align-items: flex-start; gap: 1.5rem; } }
+@media (max-width: 768px) { .titleSection h1 { font-size: 1.75rem; } .fileGrid { grid-template-columns: 1fr; gap: 1.5rem; } }

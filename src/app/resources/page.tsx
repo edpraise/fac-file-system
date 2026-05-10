@@ -1,46 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import FileCard from '@/components/ui/FileCard';
+import FileViewer from '@/components/ui/FileViewer';
 import { Plus } from 'lucide-react';
 import styles from './resources.module.css';
-
-const categories = [
-  'All', 'Training', 'internal memo', 'incoming file', 'outgoingfile', 'hcf biodata& documents'
-];
-
-const mockFiles = [
-  { id: '1', name: 'Internal Memo - Security', category: 'internal memo', type: 'PDF', size: '2.4 MB', date: '2025-01-10' },
-  { id: '2', name: 'Training Manual V1', category: 'Training', type: 'DOCX', size: '1.1 MB', date: '2025-02-15' },
-  { id: '3', name: 'Incoming File - Admin', category: 'incoming file', type: 'PDF', size: '5.8 MB', date: '2025-03-01' },
-  { id: '4', name: 'Staff Onboarding Video', category: 'Training', type: 'MP4', size: '3.2 MB', date: '2025-01-20' },
-  { id: '5', name: 'Outgoing Memo - Dept', category: 'outgoingfile', type: 'PDF', size: '4.5 MB', date: '2025-02-05' },
-  { id: '6', name: 'Biodata Forms', category: 'hcf biodata& documents', type: 'PDF', size: '1.8 MB', date: '2025-03-12' },
-];
-
-import { useEffect } from 'react';
 import { getFilesAction, deleteFileAction } from '@/app/actions/fileActions';
 import UploadModal from '@/components/ui/UploadModal';
 import EditFileModal from '@/components/ui/EditFileModal';
 import { toast } from 'react-hot-toast';
 import { useSearch } from '@/components/providers/SearchProvider';
 
+const categories = [
+  'All', 'Training', 'internal memo', 'incoming file', 'outgoingfile', 'hcf biodata& documents'
+];
+
 export default function ResourcesPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [files, setFiles] = useState<any[]>([]);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [editingFile, setEditingFile] = useState<any>(null);
+  const [viewingFile, setViewingFile] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { searchQuery } = useSearch();
 
   const fetchFiles = async () => {
     setIsLoading(true);
     try {
-      const data = await getFilesAction({ 
-        category: activeCategory,
-        search: searchQuery
-      });
+      const data = await getFilesAction({ category: activeCategory, search: searchQuery });
       setFiles(data);
     } catch (error) {
       toast.error('Failed to fetch files');
@@ -49,13 +37,10 @@ export default function ResourcesPage() {
     }
   };
 
-  useEffect(() => {
-    fetchFiles();
-  }, [activeCategory, searchQuery]);
+  useEffect(() => { fetchFiles(); }, [activeCategory, searchQuery]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this file?')) return;
-    
     try {
       await deleteFileAction(id);
       toast.success('File deleted');
@@ -67,8 +52,20 @@ export default function ResourcesPage() {
 
   const handleEdit = (id: string) => {
     const file = files.find(f => f._id === id);
+    if (file) setEditingFile(file);
+  };
+
+  const handleView = (id: string) => {
+    const file = files.find(f => f._id === id);
     if (file) {
-      setEditingFile(file);
+      setViewingFile({
+        name: file.name,
+        type: file.fileType,
+        url: file.cloudinaryUrl,
+        size: (file.size / 1024 / 1024).toFixed(1) + ' MB',
+        date: new Date(file.uploadDate).toLocaleDateString(),
+        category: file.category,
+      });
     }
   };
 
@@ -88,19 +85,19 @@ export default function ResourcesPage() {
       <div className={styles.header}>
         <div className={styles.titleSection}>
           <h1>Resources</h1>
-          <p>Access marketing materials, templates, and training resources</p>
+          <p>Access and manage official FSCFN documents and training materials</p>
         </div>
         <button className="btn btn-primary" onClick={() => setIsUploadModalOpen(true)}>
           <Plus size={20} />
-          <span>Add Resources</span>
+          <span>Add Resource</span>
         </button>
       </div>
 
       <div className={styles.filterBar}>
         <div className={styles.categories}>
           {categories.map(cat => (
-            <button 
-              key={cat} 
+            <button
+              key={cat}
               className={`${styles.catBtn} ${activeCategory === cat ? styles.catActive : ''}`}
               onClick={() => setActiveCategory(cat)}
             >
@@ -115,7 +112,7 @@ export default function ResourcesPage() {
       ) : (
         <div className={styles.fileGrid}>
           {files.map(file => (
-            <FileCard 
+            <FileCard
               key={file._id}
               id={file._id}
               name={file.name}
@@ -127,7 +124,8 @@ export default function ResourcesPage() {
               onDelete={handleDelete}
               onDownload={handleDownload}
               onEdit={handleEdit}
-              isAdmin={true} // In real app, check session
+              onView={handleView}
+              isAdmin={true}
             />
           ))}
           {files.length === 0 && (
@@ -136,21 +134,22 @@ export default function ResourcesPage() {
         </div>
       )}
 
-      <UploadModal 
-        isOpen={isUploadModalOpen} 
-        onClose={() => {
-          setIsUploadModalOpen(false);
-          fetchFiles();
-        }} 
+      {/* File Viewer Modal */}
+      <FileViewer
+        isOpen={!!viewingFile}
+        file={viewingFile}
+        onClose={() => setViewingFile(null)}
       />
 
-      <EditFileModal 
+      <UploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => { setIsUploadModalOpen(false); fetchFiles(); }}
+      />
+
+      <EditFileModal
         isOpen={!!editingFile}
         file={editingFile}
-        onClose={() => {
-          setEditingFile(null);
-          fetchFiles();
-        }}
+        onClose={() => { setEditingFile(null); fetchFiles(); }}
       />
     </DashboardLayout>
   );

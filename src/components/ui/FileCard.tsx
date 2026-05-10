@@ -1,4 +1,6 @@
-import { Download, Trash2, Edit2, File as FileIcon, ExternalLink, Share2, Mail, MessageCircle } from 'lucide-react';
+'use client';
+
+import { Download, Trash2, Edit2, File as FileIcon, ExternalLink, Share2, Mail, MessageCircle, Eye } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import styles from './FileCard.module.css';
 
@@ -13,22 +15,11 @@ interface FileCardProps {
   onDownload?: (id: string) => void;
   onDelete?: (id: string) => void;
   onEdit?: (id: string) => void;
+  onView?: (id: string) => void;
   isAdmin?: boolean;
 }
 
-export default function FileCard({ 
-  id, 
-  name, 
-  type, 
-  size, 
-  category, 
-  date, 
-  url,
-  onDownload, 
-  onDelete, 
-  onEdit,
-  isAdmin 
-}: FileCardProps) {
+export default function FileCard({ id, name, type, size, category, date, url, onDownload, onDelete, onEdit, onView, isAdmin }: FileCardProps) {
   const [showShare, setShowShare] = useState(false);
   const shareRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +44,7 @@ export default function FileCard({
   const shareEmail = () => {
     const downloadUrl = getDownloadUrl(url);
     const subject = encodeURIComponent(`Shared File: ${name}`);
-    const body = encodeURIComponent(`I've shared a file with you from FSCFN: ${name}\n\nYou can download it here: ${downloadUrl}`);
+    const body = encodeURIComponent(`I've shared a file with you from FSCFN: ${name}\n\nDownload here: ${downloadUrl}`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     setShowShare(false);
   };
@@ -86,9 +77,8 @@ export default function FileCard({
       <div className={styles.content}>
         <h3 className={styles.fileName}>{name}</h3>
         <p className={styles.details}>
-          {category} resource uploaded on {date}. Size: {size}
+          {category} · Uploaded {date} · {size}
         </p>
-        
         <div className={styles.meta}>
           <div className={styles.metaItem}>
             <span className={styles.metaLabel}>Category</span>
@@ -98,50 +88,51 @@ export default function FileCard({
       </div>
 
       <div className={styles.actions}>
-        <div className={styles.mainActions}>
-          <button className={styles.downloadBtn} onClick={() => onDownload?.(id)}>
-            <Download size={16} />
+        {/* Top row: View + Download */}
+        <div className={styles.topActions}>
+          <button className={styles.viewBtn} onClick={() => onView?.(id)} title="Preview file">
+            <Eye size={15} />
+            <span>View</span>
+          </button>
+          <button className={styles.downloadBtn} onClick={() => onDownload?.(id)} title="Download file">
+            <Download size={15} />
             <span>Download</span>
           </button>
-          
-          <div className={styles.shareWrapper} ref={shareRef}>
-            <button 
-              className={styles.shareBtn} 
-              onClick={() => setShowShare(!showShare)}
-              title="Share Resource"
-            >
-              <Share2 size={16} />
-            </button>
+        </div>
 
+        {/* Bottom row: Share + Admin actions */}
+        <div className={styles.bottomActions}>
+          <div className={styles.shareWrapper} ref={shareRef}>
+            <button className={styles.shareBtn} onClick={() => setShowShare(!showShare)}>
+              <Share2 size={14} />
+              <span>Share</span>
+            </button>
             {showShare && (
               <div className={styles.shareDropdown}>
                 <button onClick={shareEmail} className={styles.shareOption}>
-                  <Mail size={14} />
-                  <span>Email</span>
+                  <Mail size={14} /><span>Email</span>
                 </button>
                 <button onClick={shareWhatsApp} className={styles.shareOption}>
-                  <MessageCircle size={14} />
-                  <span>WhatsApp</span>
+                  <MessageCircle size={14} /><span>WhatsApp</span>
                 </button>
                 <button onClick={copyLink} className={styles.shareOption}>
-                  <ExternalLink size={14} />
-                  <span>Copy Link</span>
+                  <ExternalLink size={14} /><span>Copy Link</span>
                 </button>
               </div>
             )}
           </div>
+
+          {isAdmin && (
+            <div className={styles.adminActions}>
+              <button className={styles.iconAction} onClick={() => onEdit?.(id)} title="Edit">
+                <Edit2 size={15} />
+              </button>
+              <button className={styles.iconActionDelete} onClick={() => onDelete?.(id)} title="Delete">
+                <Trash2 size={15} />
+              </button>
+            </div>
+          )}
         </div>
-        
-        {isAdmin && (
-          <div className={styles.adminActions}>
-            <button className={styles.iconAction} onClick={() => onEdit?.(id)} title="Edit">
-              <Edit2 size={16} />
-            </button>
-            <button className={styles.iconActionDelete} onClick={() => onDelete?.(id)} title="Delete">
-              <Trash2 size={16} />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
