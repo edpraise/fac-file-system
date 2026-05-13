@@ -1,15 +1,15 @@
 .sidebar {
   width: 280px;
   background: var(--section-bg);
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 0;
   border-right: 1px solid var(--card-border);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
   z-index: 1000;
   box-shadow: 4px 0 24px rgba(0, 135, 81, 0.03);
+  overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .logoContainer {
@@ -149,6 +149,7 @@
     transform: translateX(-100%);
     width: 280px;
     height: 100vh;
+    height: 100dvh;
   }
   
   .sidebar.open {
