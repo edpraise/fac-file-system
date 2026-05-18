@@ -38,7 +38,7 @@ export default function Sidebar({ userRole, isOpen, onClose }: {
         <div className={styles.logoContainer}>
           <div className={styles.logoGroup}>
             <div className={styles.logo}>
-              <img src="/flogo.jpg" alt="Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit', objectFit: 'cover' }} />
+              <img src="/flogo.JPG" alt="Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit', objectFit: 'cover' }} />
             </div>
             <span className={styles.brandName}>
               {/* FORUM OF STATE COMMISSIONERS FOR FINANCE OF NIGERIA */}
