@@ -65,13 +65,29 @@ export default function FileCard({ id, name, type, size, category, date, url, on
     setShowShare(false);
   };
 
+  const getFriendlyType = (mimeType: string) => {
+    if (!mimeType) return 'document';
+    const t = mimeType.toLowerCase();
+    if (t.includes('word') || t.includes('officedocument.wordprocessingml') || t.includes('msword')) return 'Word Doc';
+    if (t.includes('pdf')) return 'PDF';
+    if (t.includes('spreadsheet') || t.includes('officedocument.spreadsheetml') || t.includes('excel') || t.includes('csv')) return 'Excel';
+    if (t.includes('presentation') || t.includes('officedocument.presentationml') || t.includes('powerpoint')) return 'PowerPoint';
+    if (t.includes('image')) return 'Image';
+    if (t.includes('text/plain')) return 'Text';
+    if (t.includes('zip') || t.includes('rar') || t.includes('tar') || t.includes('gzip')) return 'Archive';
+    
+    const parts = mimeType.split('/');
+    const subType = parts[parts.length - 1].toUpperCase();
+    return subType.length > 8 ? subType.substring(0, 8) + '...' : subType;
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.header}>
         <div className={styles.iconContainer}>
           <FileIcon size={24} className={styles.fileIcon} />
         </div>
-        <span className={styles.badge}>{type || 'document'}</span>
+        <span className={styles.badge}>{getFriendlyType(type)}</span>
       </div>
 
       <div className={styles.content}>
